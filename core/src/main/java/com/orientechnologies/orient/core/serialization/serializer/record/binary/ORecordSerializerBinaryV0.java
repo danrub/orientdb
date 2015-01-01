@@ -72,6 +72,55 @@ public class ORecordSerializerBinaryV0 implements ODocumentSerializer {
     utf8 = Charset.forName("UTF-8");
   }
 
+  public Object serachAndReturn(final BytesContainer bytes, final byte[] field) {
+    readString(bytes);
+
+    String fieldName;
+    int valuePos;
+    OType type;
+
+    while (true) {
+      final int len = OVarIntSerializer.readAsInteger(bytes);
+
+      if (len == 0) {
+        // SCAN COMPLETED
+        break;
+      } else if (len > 0) {
+        // CHECK BY FIELD NAME SIZE: THIS AVOID EVEN THE UNMARSHALLING OF FIELD NAME
+        if (field.length != len) {
+          bytes.skip(len + OIntegerSerializer.INT_SIZE + 1);
+          continue;
+        }
+        boolean match = true;
+        for (int i = 0; i < len; i++) {
+          if (bytes.bytes[bytes.offset + i] != field[i]) {
+            match = false;
+            break;
+          }
+        }
+        if (!match) {
+          bytes.skip(len + OIntegerSerializer.INT_SIZE + 1);
+          continue;
+        }
+        bytes.skip(len);
+        valuePos = readInteger(bytes);
+        type = readOType(bytes);
+      } else {
+        // LOAD GLOBAL PROPERTY BY ID
+        throw new RuntimeException();
+      }
+
+      if (valuePos != 0) {
+        bytes.offset = valuePos;
+        return readSingleValue(bytes, type, null);
+
+      } else
+        break;
+
+    }
+    return null;
+  }
+
   public void deserializePartial(final ODocument document, final BytesContainer bytes, final String[] iFields) {
     final String className = readString(bytes);
     if (className.length() != 0)
