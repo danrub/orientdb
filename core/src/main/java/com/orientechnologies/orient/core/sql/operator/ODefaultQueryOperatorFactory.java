@@ -15,11 +15,8 @@
  */
 package com.orientechnologies.orient.core.sql.operator;
 
-import com.orientechnologies.orient.core.sql.operator.math.OQueryOperatorDivide;
-import com.orientechnologies.orient.core.sql.operator.math.OQueryOperatorMinus;
-import com.orientechnologies.orient.core.sql.operator.math.OQueryOperatorMod;
-import com.orientechnologies.orient.core.sql.operator.math.OQueryOperatorMultiply;
-import com.orientechnologies.orient.core.sql.operator.math.OQueryOperatorPlus;
+import com.orientechnologies.orient.core.sql.operator.math.*;
+
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -61,6 +58,8 @@ public class ODefaultQueryOperatorFactory implements OQueryOperatorFactory{
         operators.add(new OQueryOperatorMultiply()); 
         operators.add(new OQueryOperatorDivide()); 
         operators.add(new OQueryOperatorMod());
+        operators.add(new OQueryOperatorBitwiseAnd());
+        operators.add(new OQueryOperatorBitwiseOr());
         OPERATORS = Collections.unmodifiableSet(operators);
     }
 
