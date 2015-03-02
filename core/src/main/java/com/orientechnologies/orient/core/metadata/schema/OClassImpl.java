@@ -810,9 +810,9 @@ public class OClassImpl extends ODocumentWrapperNoClass implements OClass {
   }
 
   public void renameProperty(final String iOldName, final String iNewName) {
-    final OProperty p = properties.remove(iOldName);
+    final OProperty p = properties.remove(iOldName.toLowerCase());
     if (p != null)
-      properties.put(iNewName, p);
+      properties.put(iNewName.toLowerCase(), p);
   }
 
   public OClass addClusterId(final int clusterId) {
@@ -2160,7 +2160,7 @@ public class OClassImpl extends ODocumentWrapperNoClass implements OClass {
     }
   }
 
-  private List<OType> extractFieldTypes(String[] fieldNames) {
+  public List<OType> extractFieldTypes(String[] fieldNames) {
     final List<OType> types = new ArrayList<OType>(fieldNames.length);
 
     for (String fieldName : fieldNames) {
