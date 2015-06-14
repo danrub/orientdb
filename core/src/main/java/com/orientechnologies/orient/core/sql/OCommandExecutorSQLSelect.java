@@ -185,7 +185,7 @@ public class OCommandExecutorSQLSelect extends OCommandExecutorSQLResultsetAbstr
         }
       }
     } else {
-      return indexDefinition.createValue(OSQLHelper.getValue(value));
+            return indexDefinition.createValue(OSQLHelper.getValue(value, null, context));
     }
   }
 
