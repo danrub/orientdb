@@ -177,7 +177,7 @@ public class OCommandExecutorSQLSelect extends OCommandExecutorSQLResultsetAbstr
         }
         return indexDefinition.createValue(keyParams);
       } else {
-        value = OSQLHelper.getValue(value);
+                value = OSQLHelper.getValue(value, context);
         if (value instanceof OCompositeKey) {
           return value;
         } else {
@@ -185,7 +185,7 @@ public class OCommandExecutorSQLSelect extends OCommandExecutorSQLResultsetAbstr
         }
       }
     } else {
-            return indexDefinition.createValue(OSQLHelper.getValue(value, null, context));
+            return indexDefinition.createValue(OSQLHelper.getValue(value, context));
     }
   }
 

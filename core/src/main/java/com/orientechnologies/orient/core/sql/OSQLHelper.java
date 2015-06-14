@@ -250,6 +250,16 @@ public class OSQLHelper {
     return iObject;
   }
 
+  public static Object getValue(final Object iObject, final OCommandContext iContext) {
+    if (iObject == null)
+      return null;
+
+    if (iObject instanceof OSQLFilterItem)
+      return ((OSQLFilterItem) iObject).getValue(null, null, iContext);
+
+    return iObject;
+  }
+
   public static Object getValue(final Object iObject, final ORecord iRecord, final OCommandContext iContext) {
     if (iObject == null)
       return null;
